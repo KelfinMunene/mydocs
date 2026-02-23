@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>My Private Documents</h1>
+
+<ul>
+    {% for document in documents %}
+<li>
+    <strong>{{ document.title }}</strong><br>
+
+    {% if document.is_image %}
+        <img src="{{ document.file.url }}" width="250"><br>
+        <a href="{{ document.file.url }}" download>Download</a>
+
+    {% elif document.is_pdf %}
+        <iframe src="{{ document.file.url }}" width="600" height="400"></iframe><br>
+        <a href="{{ document.file.url }}" download>Download PDF</a>
+
+    {% else %}
+        <a href="{{ document.file.url }}">View</a> |
+        <a href="{{ document.file.url }}" download>Download</a>
+    {% endif %}
+</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

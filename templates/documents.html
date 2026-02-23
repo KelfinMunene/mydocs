@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Public Documents</h1>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap;">
+{% for document in documents %}
+    <div style="border:1px solid #ccc; padding:15px; width:320px; border-radius:8px;">
+
+        <h3>
+    {{ document.title }}
+    {% if document.is_pdf %}(PDF){% endif %}
+    {% if document.is_image %}(Image){% endif %}
+</h3>
+
+
+        {% if document.is_image %}
+            <img src="{{ document.file.url }}" width="250">
+        {% elif document.is_pdf %}
+    <a href="{{ document.file.url }}" target="_blank">
+        Open PDF
+    </a>
+
+        {% else %}
+            <a href="{{ document.file.url }}">Open File</a>
+        {% endif %}
+    </div>
+{% empty %}
+    <p style="color:#666;">No public documents available.</p>
+
+{% endfor %}
+</div>
+
+{% endblock %}
